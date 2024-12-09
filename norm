@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Directory to search for C files
+DIRECTORY=${1:-.}
+
+# Program to process each file
+PROGRAM="python3 -m c_formatter_42"  # Replace with the actual program you want to use
+
+# Check if the program exists
+if ! command -v $PROGRAM &> /dev/null; then
+    echo "Error: $PROGRAM not found. Please install it with:"
+	echo "pip3 install --user c-formatter-42"
+    printf "\nor goto: https://github.com/dawnbeen/c_formatter_42"
+	exit 1
+fi
+
+SAVE=false
+while getopts "hs" arg; do
+  case $arg in
+    h)
+      echo "usage" 
+      ;;
+    s)
+	  SAVE=false
+      echo $strength
+      ;;
+  esac
+done
+
+# Process each C file in the directory
+for file in "$DIRECTORY"/*.c; do
+    if [ -f "$file" ]; then
+		clean_name="${file#./}"
+        echo "Processing $file"
+		cp "$file" "save_${clean_name}"
+        $PROGRAM "${clean_name}" # Pass the file to the program
+		if [ "$SAVE" = false ]; then
+			rm "save_${clean_name}"
+		fi
+	else
+        echo "No C files found in $DIRECTORY."
+    fi
+done
+
+echo "Processing completed."
