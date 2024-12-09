@@ -1,0 +1,36 @@
+#!/bin/bash
+
+CFLAGS="-std=c11 -Wall -Wextra -Werror"
+
+# Check if the user provided a .c file
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <source_file.c>"
+    exit 1
+fi
+
+# Get the input file and derive the test file name
+SOURCE_FILE="$1"
+TEST_FILE="$HOME/tests/${SOURCE_FILE%.c}_test.c"
+
+# Check if the source file exists
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "Error: Source file '$SOURCE_FILE' not found!"
+    exit 1
+fi
+
+# Check if the corresponding test file exists
+if [ ! -f "$TEST_FILE" ]; then
+    echo "Error: Test file '$TEST_FILE' not found!"
+    exit 1
+fi
+
+# Compile the source and test files
+gcc $CFLAGS "$SOURCE_FILE" "$TEST_FILE"
+
+# Check if the compilation was successful
+if [ $? -eq 0 ]; then
+	./a.out
+	rm ./a.out
+else
+    echo "Compilation failed!"
+fi
