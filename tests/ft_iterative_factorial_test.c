@@ -1,17 +1,18 @@
 #include <stdio.h>
+#include "factorial_test.h"
 
 int ft_iterative_factorial(int nb);
 
 void test_factorial() {
     int er = 0;
-    int test_cases[][2] = {
+    /*int test_cases[][2] = {
         {5, 120},    // Normal case
         {0, 1},      // Edge case: 0! = 1
         {1, 1},      // Edge case: 1! = 1
         {12, 479001600}, // Max valid case
         {-5, 0},     // Invalid negative
         {13, 0}      // Overflow case
-    };
+    };*/
     
     int num_tests = sizeof(test_cases) / sizeof(test_cases[0]);
     
