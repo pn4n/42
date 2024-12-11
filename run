@@ -6,7 +6,7 @@ process_file(){
 	 # Get the input file and derive the test file name
     SRC_FILE=$(basename "$1")
     SRC_FULL="$1"
-    TEST_FILE="$HOME/tests/${SRC_FILE%.c}_test.c"
+    TEST_FILE="$HOME/42/tests/${SRC_FILE%.c}_test.c"
 
     # Check if the source file exists
     if [ ! -f "$SRC_FULL" ]; then
