@@ -1,16 +1,19 @@
 #!/bin/bash
 
-# Directory to search for C files
 DIRECTORY=${1:-.}
 
-# Program to process each file
-PROGRAM="python3 -m c_formatter_42"  # Replace with the actual program you want to use
+COMMAND="python3 -m c_formatter_42"
 
-# Check if the program exists
-if ! command -v $PROGRAM &> /dev/null; then
-    echo "Error: $PROGRAM not found. Please install it with:"
+OUTPUT=($COMMAND)
+EXPECTED="No module named c_formatter_42"
+
+if echo "$OUTPUT" | grep "$EXPECTED"; then
+	echo "Error: $COMMAND not found. Please install it with:"
+	echo ""
+	echo "----------------------------------"
 	echo "pip3 install --user c-formatter-42"
-    printf "\nor goto: https://github.com/dawnbeen/c_formatter_42"
+	echo "----------------------------------"
+    printf "\nor goto: https://github.com/dawnbeen/c_formatter_42\n"
 	exit 1
 fi
 
@@ -21,8 +24,7 @@ while getopts "hs" arg; do
       echo "usage" 
       ;;
     s)
-	  SAVE=false
-      echo $strength
+	  SAVE=true
       ;;
   esac
 done
@@ -33,7 +35,7 @@ for file in "$DIRECTORY"/*.c; do
 		clean_name="${file#./}"
         echo "Processing $file"
 		cp "$file" "save_${clean_name}"
-        $PROGRAM "${clean_name}" # Pass the file to the program
+        $COMMAND "${clean_name}" # Pass the file to the program
 		if [ "$SAVE" = false ]; then
 			rm "save_${clean_name}"
 		fi
