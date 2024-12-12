@@ -21,8 +21,8 @@ void test_strstr(char *test_name, char *str, char *to_find) {
 }
 
 int main(void) {
-    int tests_passed = 0;
-    int total_tests = 6;
+//    int tests_passed = 0;
+//    int total_tests = 6;
     
     test_strstr("Normal case", "Hello World", "World");
     test_strstr("Empty needle", "Hello World", "");

@@ -3,7 +3,7 @@
 
 char *ft_strcat(char *dest, char *src);  // Your function prototype
 
-void test_strcat(char *test_name, char *dest, char *src, int buffer_size) {
+int test_strcat(char *test_name, char *dest, char *src, int buffer_size) {
     char expected[256];
     char result[256];
     
@@ -21,10 +21,13 @@ void test_strcat(char *test_name, char *dest, char *src, int buffer_size) {
     printf("Expected: \"%s\"\n", expected);
     printf("Result  : \"%s\"\n", result);
     
-    if (strcmp(expected, result) == 0)
+    if (strcmp(expected, result) == 0){
         printf("✅ Test passed!\n");
-    else
+   		return 1;
+	}
+   	else
         printf("❌ Test failed!\n");
+	return 0;
 }
 
 int main(void) {
@@ -34,22 +37,23 @@ int main(void) {
     char dest4[50] = "A";
     int tests_passed = 0;
     int total_tests = 4;
+	int res;
     
     // Test 1: Normal case
-    test_strcat("Normal concatenation", dest1, "World!", 50);
-    if (strcmp(dest1, "Hello World!") == 0) tests_passed++;
+    res = test_strcat("Normal concatenation", dest1, "World!", 50);
+    tests_passed += res;
     
     // Test 2: Empty destination
-    test_strcat("Empty destination", dest2, "Hello", 50);
-    if (strcmp(dest2, "Hello") == 0) tests_passed++;
+    res = test_strcat("Empty destination", dest2, "Hello", 50);
+    tests_passed += res;
     
     // Test 3: Empty source
-    test_strcat("Empty source", dest3, "", 50);
-    if (strcmp(dest3, "Test") == 0) tests_passed++;
+    res = test_strcat("Empty source", dest3, "", 50);
+    tests_passed += res;
     
     // Test 4: Single character
-    test_strcat("Single character append", dest4, "B", 50);
-    if (strcmp(dest4, "AB") == 0) tests_passed++;
+    res = test_strcat("Single character append", dest4, "B", 50);
+    tests_passed += res;
     
     // Final results
     printf("\n=========================\n");
