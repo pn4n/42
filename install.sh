@@ -15,6 +15,10 @@ add_alias norm '~/42/norm'
 
 printf "
 Usage:
-	rt <file> \t run test for <file>
-	norm <file> \t run notminette for <file>
+	rt <file.c>		run test for <file.c>
+	rt			run tests for every .c file in the current dir and subdirs
+
+	norm			run notminette for every .c and .h file in current dir
+		-s		make backup for every file before norminetting
+
 "
