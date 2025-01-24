@@ -1,0 +1,15 @@
+#!/bin/bash
+
+CFLAGS="-std=c11 -Wall -Wextra -Werror"
+
+FILE="$1"
+
+if [ ! -f "$FILE" ]; then
+	echo "File '$1' doesnt exist"
+	exit 1
+fi
+
+~/norm
+gcc $CFLAGS $1
+./a.out
+#rm a.out

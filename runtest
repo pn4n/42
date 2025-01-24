@@ -1,0 +1,60 @@
+#!/bin/bash
+
+CFLAGS="-std=c11 -Wall -Wextra -Werror"
+
+process_file(){
+	 # Get the input file and derive the test file name
+    SRC_FILE=$(basename "$1")
+    SRC_FULL="$1"
+    TEST_FILE="$HOME/42/tests/${SRC_FILE%.c}_test.c"
+	TEST_FOR_H="$HOME/42/tests/${SRC_FILE%.h}_test.c"
+    
+	# Check if the source file exists
+    if [ ! -f "$SRC_FULL" ]; then
+        echo "Error: Source file '$SRC_FULL' not found!"
+        exit 1
+    fi
+
+	# echo "full $SRC_FULL file $SRC_FILE"
+    
+	# Check if the corresponding test file exists
+    if [ ! -f "$TEST_FILE" ]; then
+        echo "Error: Test file '$TEST_FILE' not found!"
+        if [ -f "$TEST_FOR_H" ]; then
+			TEST_FILE="$TEST_FOT_H"
+		else
+			exit 1
+		fi
+    fi
+
+    # Compile the source and test files
+    gcc $CFLAGS "$SRC_FULL" "$TEST_FILE"
+
+    # Check if the compilation was successful
+    if [ $? -eq 0 ]; then
+        ./a.out
+        rm ./a.out
+    else
+        echo "Compilation failed!"
+    fi
+}
+
+while getopts "h" arg; do
+  case $arg in
+    h)
+	  echo "Usage:"
+      printf "bash run <file.c>\t- run test for file.c\n"
+	  printf "bash run \t\t- run test for every c file in current dir and subdirs\n"
+      exit 0
+	  ;;
+  esac
+done
+
+if [ $# -eq 0 ]; then
+	find . -type f -name "*.c" | while read -r file; do
+		process_file "$file"
+	done
+elif [ $# -eq 1 ]; then
+	filename="$1"
+	process_file "$filename"
+fi

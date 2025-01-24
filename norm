@@ -1,0 +1,47 @@
+#!/bin/bash
+
+DIRECTORY=${1:-.}
+
+COMMAND="python3 -m c_formatter_42"
+
+OUTPUT=($COMMAND)
+EXPECTED="No module named c_formatter_42"
+
+if echo "$OUTPUT" | grep "$EXPECTED"; then
+	echo "Error: $COMMAND not found. Please install it with:"
+	echo ""
+	echo "----------------------------------"
+	echo "pip3 install --user c-formatter-42"
+	echo "----------------------------------"
+    printf "\nor goto: https://github.com/dawnbeen/c_formatter_42\n"
+	exit 1
+fi
+
+SAVE=false
+while getopts "hs" arg; do
+  case $arg in
+    h)
+      echo "usage" 
+      ;;
+    s)
+	  SAVE=true
+      ;;
+  esac
+done
+
+# Process each C file in the directory
+for file in "$DIRECTORY"/*.c "$DIRECTORY"/*.h; do
+    if [ -f "$file" ]; then
+		clean_name="${file#./}"
+        echo "Processing $file"
+		cp "$file" "save_${clean_name}"
+        $COMMAND "${clean_name}" # Pass the file to the program
+		if [ "$SAVE" = false ]; then
+			rm "save_${clean_name}"
+		fi
+	else
+        echo "No C files found in $DIRECTORY."
+    fi
+done
+
+echo "Processing completed."
