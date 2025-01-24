@@ -15,7 +15,7 @@ process_file(){
         exit 1
     fi
 
-	# echo "full $SRC_FULL file $SRC_FILE"
+	echo "path to file $SRC_FULL file $SRC_FILE"
     
 	# Check if the corresponding test file exists
     if [ ! -f "$TEST_FILE" ]; then
@@ -26,8 +26,13 @@ process_file(){
 			exit 1
 		fi
     fi
-
-    # Compile the source and test files
+	
+#	special case 
+#	ft_isalpha and ft_str_is_alpha has same test file
+ 	if [ "$SRC_FILE" == "ft_isalpha.c" ]; then
+		CFLAGS="-DISAL $CFLAGS"
+	fi
+	
     gcc $CFLAGS "$SRC_FULL" "$TEST_FILE"
 
     # Check if the compilation was successful
