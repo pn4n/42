@@ -1,11 +1,13 @@
-!/bin/bash
+###!/bin/bash
 
 if [[ $EUID -ne 0 ]]; then
+	echo -e "\n#	  APPARMOR	#"
+	systemctl is-enabled apparmor
 
-        echo -e "\n#     HOSTNAME       #"
+        echo -e "\n#      HOSTNAME      #"
         hostname
 
-        echo -e "\n#      GROUPS        #"
+        echo -e "\n#       GROUPS       #"
         if id $USER &>/dev/null; then
             echo "$USER exists."
         else
@@ -23,10 +25,10 @@ if [[ $EUID -ne 0 ]]; then
 
         sudo grep "PermitRootLogin no" /etc/ssh/sshd_config || echo "[---] root login is NOT disabled"
 
-        echo -e "\n#     PARTITIONS     #"
+        echo -e "\n#	 PARTITIONS	#"
         lsblk
 
-        echo -e "\n#        CRON        #"
+        echo -e "\n#       CRON         #"
         crontab -l
 
         echo -e "! run me with sudo !\n"
@@ -39,7 +41,7 @@ else
                 echo "[---] sudo logs are missing!"
         fi
 
-        echo -e "\n#       CRON         #"
+        echo -e "\n#        CRON        #"
         crontab -l
 
         echo -e "! run me without sudo !\n"
