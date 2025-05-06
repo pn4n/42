@@ -2,9 +2,10 @@
 
 DIRECTORY=${1:-.}
 
-#worked on macos
-#COMMAND="python3 -m c_formatter_42"
-COMMAND="pipx run c_formatter_42"
+# worked on macos
+# COMMAND="python3 -m c_formatter_42"
+
+COMMAND="c_formatter_42"
 
 OUTPUT=($COMMAND)
 EXPECTED="No module named c_formatter_42"
@@ -38,7 +39,7 @@ for file in "$DIRECTORY"/*.c "$DIRECTORY"/*.h; do
         echo "Processing $file"
 		cp "$file" "save_${clean_name}"
         $COMMAND "${clean_name}" # Pass the file to the program
-		if [ "$SAVE" = false ]; then
+	if [ "$SAVE" = false ]; then
 			rm "save_${clean_name}"
 		fi
 	else
