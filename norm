@@ -2,7 +2,9 @@
 
 DIRECTORY=${1:-.}
 
-COMMAND="python3 -m c_formatter_42"
+#worked on macos
+#COMMAND="python3 -m c_formatter_42"
+COMMAND="pipx run c_formatter_42"
 
 OUTPUT=($COMMAND)
 EXPECTED="No module named c_formatter_42"
